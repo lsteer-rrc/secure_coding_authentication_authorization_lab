@@ -26,7 +26,7 @@ def create_session(user_id, username, role):
         username -- the user's username string
         role     -- the user's role string, either 'user' or 'sysop'
     """
-    
+
     token = secrets.token_hex(32)
     sessions[token] = {'user_id': user_id, 'username': username, 'role': role}
     return token
@@ -407,7 +407,7 @@ def logout():
     Removes the session from the in-memory store and deletes the cookie,
     then redirects to the home page.
     """
-    session.clear()
+    sessions.clear()
 
     return make_response(redirect(url_for('index')))
 
