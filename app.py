@@ -551,7 +551,7 @@ def profile_edit():
     if not current:
         return redirect(url_for('login'))
     if request.method == 'POST':
-        target_id = int(request.form.get('user_id', current['user_id']))
+        target_id = int(session.get('user_id', current['user_id']))
         region = request.form.get('region', '')
         user_repo.update_region(target_id, region)
         flash('Profile updated.')
