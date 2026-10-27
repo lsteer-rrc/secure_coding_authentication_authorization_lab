@@ -2,7 +2,7 @@ import sqlite3
 import os
 from abc import ABC, abstractmethod
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, request, redirect, url_for, make_response, flash
+from flask import Flask, render_template, request, redirect, session, url_for, make_response, flash
 
 app = Flask(__name__)
 app.secret_key = 'bbs-net-1987'
@@ -409,12 +409,10 @@ def logout():
     Removes the session from the in-memory store and deletes the cookie,
     then redirects to the home page.
     """
-    token = request.cookies.get('bbs_token')
-    if token and token in sessions:
-        del sessions[token]
-    resp = make_response(redirect(url_for('index')))
-    resp.delete_cookie('bbs_token')
-    return resp
+    session.clear()
+
+    return make_response(redirect(url_for('index')))
+
 
 
 @app.route('/directory')
