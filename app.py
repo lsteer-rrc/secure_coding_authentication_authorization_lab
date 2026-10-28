@@ -571,6 +571,8 @@ def sysop():
     current = get_current_user(request)
     if not current:
         return redirect(url_for('login'))
+    if current['role'] != 'sysop':
+        return redirect(url_for('index'))
     all_users = user_repo.get_all()
     all_nodes = node_repo.get_all()
     return render_template('sysop.html', users=all_users, nodes=all_nodes, current_user=current)
