@@ -527,6 +527,9 @@ def profile(user_id):
         user_id -- the integer primary key of the user from the URL
     """
     current = get_current_user(request)
+    if not current or current['user_id'] != user_id:
+        flash('Access denied.', 'error')
+        return redirect(url_for('index'))
     user = user_repo.find_by_id(user_id)
     if not user:
         flash('User not found.', 'error')
